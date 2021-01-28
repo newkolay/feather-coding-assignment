@@ -4,18 +4,22 @@ export interface Option {
 	stepsToSkip?: number;
 }
 
-export interface QuestionValue {
+export type QuestionTypes = "INPUT" | "RADIO";
+export interface QuestionInput {
 	id: string;
 	questionText: string;
-	type: string;
-	validationRegex?: string;
-	options?: Option[];
+	type: "INPUT";
+	validationRegex: string;
 }
-
+export interface QuestionRadioButtons {
+	id: string;
+	questionText: string;
+	type: "RADIO";
+	options: Option[];
+}
 interface AnswersKeys {
 	[key: string]: string | number;
 }
-
 interface AnswersObj extends AnswersKeys {
 	firstName: string;
 	address: string;
@@ -23,9 +27,10 @@ interface AnswersObj extends AnswersKeys {
 	occupation: string;
 	email: string;
 }
-
 export interface QuestionnaireState {
-	questions: QuestionValue[];
+	questions: (QuestionInput | QuestionRadioButtons)[];
 	currentIndex: number;
 	answers: AnswersObj;
+	isError: boolean;
+	stepsSkipped: number;
 }

@@ -4,11 +4,11 @@ import { Option } from "../../../interfaces/app-interfaces";
 interface RadioButtonsProps {
 	options: Option[];
 	name: string;
-	value: string | number;
+	checkedValue: string | number;
 	onChange(e: React.ChangeEvent<HTMLInputElement>): void;
 }
 
-export default function RadioButtons({ options, name, value, onChange }: RadioButtonsProps) {
+export default function RadioButtons({ options, name, checkedValue, onChange }: RadioButtonsProps) {
 	return (
 		<div>
 			{options.map((option) => (
@@ -18,7 +18,7 @@ export default function RadioButtons({ options, name, value, onChange }: RadioBu
 						name={name}
 						id={option.value}
 						value={option.value}
-						checked={value === option.value}
+						checked={checkedValue === option.value}
 						onChange={onChange}
 					/>
 					<label htmlFor={option.value}>{option.name}</label>
