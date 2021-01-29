@@ -1,9 +1,21 @@
+import { useRef } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
+import { RootState } from "../../app/rootReducer";
 import Question from "../Question";
 import { nextQuestion, prevQuestion, setError } from "../../slices/questionnaireSlice";
 import { INPUT_TYPE } from "../../utils/constants";
-import { QuestionInput } from "../../interfaces/app-interfaces";
+import { QuestionInput } from "../../interfaces/questionnaire.interface";
+import { createUserRequest } from "../../slices/authSlice";
+import {
+	StyledQuestionnaire,
+	StyledQuestionWrapper,
+	StyledErrorsWrapper,
+	StyledErrorItem,
+} from "./styles";
+import ButtonLink from "../common/ButtonLink";
+import Button from "../common/Button";
+import { StyledLinkWrapper } from "../Recommendation/styles";
+import { createQuestionnaireToSend } from "../../utils/questionnaireUtils";
 
 export default function Questionnaire() {
 	const dispatch = useDispatch();
@@ -16,9 +28,22 @@ export default function Questionnaire() {
 		shallowEqual
 	);
 
+	const { isLoading, errors } = useSelector(
+		(state: RootState) => ({
+			isLoading: state.auth.isLoading,
+			errors: state.auth.errors,
+		}),
+		shallowEqual
+	);
+
+	const controlRef = useRef<HTMLInputElement | null>(null);
+
 	const prev = () => {
 		dispatch(setError(false));
 		dispatch(prevQuestion());
+		if (controlRef.current) {
+			controlRef.current.focus();
+		}
 	};
 
 	const next = () => {
@@ -37,19 +62,59 @@ export default function Questionnaire() {
 		if (!error) {
 			dispatch(nextQuestion());
 		}
+
+		if (controlRef.current) {
+			controlRef.current.focus();
+		}
+	};
+
+	const finish = () => {
+		const requestObj = createQuestionnaireToSend(answers);
+		dispatch(createUserRequest(requestObj));
+	};
+
+	const nextAction = () => {
+		if (currentIndex === questions.length - 1) {
+			finish();
+		} else {
+			next();
+		}
 	};
 
 	return (
-		<div>
-			<Question question={questions[currentIndex]} />
-			{currentIndex > 0 && (
-				<button type="button" onClick={prev}>
-					Prev
-				</button>
-			)}
-			<button type="button" onClick={next}>
-				Next
-			</button>
-		</div>
+		<StyledQuestionnaire>
+			<StyledQuestionWrapper role="main">
+				<Question
+					question={questions[currentIndex]}
+					controlRef={controlRef}
+					nextAction={nextAction}
+				/>
+				{currentIndex === questions.length - 1 ? (
+					<Button onClick={finish} disabled={isLoading}>
+						Finish Questionnaire
+					</Button>
+				) : (
+					<Button onClick={next} disabled={isLoading}>
+						Next
+					</Button>
+				)}
+
+				{errors && (
+					<StyledErrorsWrapper>
+						{Object.keys(errors).map((key) => (
+							<StyledErrorItem key={key}>
+								{key}: {errors[key].join(" ")}
+							</StyledErrorItem>
+						))}
+					</StyledErrorsWrapper>
+				)}
+
+				{currentIndex > 0 && (
+					<StyledLinkWrapper>
+						<ButtonLink onClick={prev}>Previous question</ButtonLink>
+					</StyledLinkWrapper>
+				)}
+			</StyledQuestionWrapper>
+		</StyledQuestionnaire>
 	);
 }
