@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 const StyledQuestion = styled.div`
-	min-width: 320px;
+	min-width: 200px;
 	margin-bottom: 35px;
+
+	@media (min-width: 481px) {
+		min-width: 400px;
+	}
 `;
 
 const StyledTitle = styled.h1`

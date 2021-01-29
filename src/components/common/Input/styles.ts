@@ -7,6 +7,7 @@ interface StyledInputProps {
 }
 
 const StyledInput = styled.input`
+	width: 100%;
 	border: ${(props: StyledInputProps) =>
 		props.isError
 			? `2px solid ${props.theme.colors.red}`
