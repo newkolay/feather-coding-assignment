@@ -1,21 +1,21 @@
 import { QuestionInput, QuestionRadioButtons } from "../interfaces/questionnaire.interface";
 import { INPUT_TYPE, RADIO_TYPE } from "../utils/constants";
 
-const questions = [
+const questions: (QuestionInput | QuestionRadioButtons)[] = [
 	{
 		id: "firstName",
 		type: INPUT_TYPE,
 		questionText: "What's your first name?",
 		placeholder: "i.e. Jane",
 		validationRegex: "^(?!\\s*$).+",
-	} as QuestionInput,
+	},
 	{
 		id: "address",
 		type: INPUT_TYPE,
 		questionText: "What's your address?",
 		placeholder: "i.e. Lohmühlenstraße 65",
 		validationRegex: "^(?!\\s*$).+",
-	} as QuestionInput,
+	},
 	{
 		id: "occupation",
 		type: RADIO_TYPE,
@@ -34,7 +34,7 @@ const questions = [
 				name: "Student",
 			},
 		],
-	} as QuestionRadioButtons,
+	},
 	{
 		id: "children",
 		type: RADIO_TYPE,
@@ -50,7 +50,7 @@ const questions = [
 				stepsToSkip: 1,
 			},
 		],
-	} as QuestionRadioButtons,
+	},
 	{
 		id: "numberOfChildren",
 		type: INPUT_TYPE,
@@ -58,14 +58,14 @@ const questions = [
 		placeholder: "Type a number here",
 		validationRegex: "^[1-9]\\d*$",
 		skippable: true,
-	} as QuestionInput,
+	},
 	{
 		id: "email",
 		type: INPUT_TYPE,
 		questionText: "What's your email?",
 		placeholder: "i.e. jane.doe@feather-insurance.com",
 		validationRegex: "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
-	} as QuestionInput,
+	},
 ];
 
 export default questions;
