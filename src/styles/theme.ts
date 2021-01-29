@@ -5,7 +5,7 @@ const theme = {
 		blue: "#0000ee",
 		purple: "#5b4aee",
 		purpleLighter: "#8d81f3",
-		red: "#ed4337",
+		red: "#d3190c",
 	},
 };
 export default theme;

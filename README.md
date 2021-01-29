@@ -7,6 +7,7 @@ https://newkolay.github.io/feather-coding-assignment/
 
 1. Last email input is not checked on the client side intentionnaly to show how the client displays errors from the server.
 2. For the CSS properties order https://github.com/brandon-rhodes/Concentric-CSS is used.
+3. Accessibility was checked with https://www.deque.com/axe/
 
 ## Things to improve
 
