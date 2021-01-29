@@ -57,6 +57,7 @@ const questions = [
 		questionText: "How many children do you have?",
 		placeholder: "Type a number here",
 		validationRegex: "^[1-9]\\d*$",
+		skippable: true,
 	} as QuestionInput,
 	{
 		id: "email",

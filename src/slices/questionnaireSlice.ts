@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AnyAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import has from "lodash.has";
 import { RADIO_TYPE } from "../utils/constants";
 import { QuestionnaireState } from "../interfaces/questionnaire.interface";
@@ -25,6 +25,10 @@ const initialState: QuestionnaireState = {
 	isError: false,
 };
 
+function isCreateUserSuccess(action: AnyAction) {
+	return action.type === createUserSuccess("").type;
+}
+
 export const questionnaireSlice = createSlice({
 	name: "questionnaire",
 	initialState,
@@ -48,6 +52,13 @@ export const questionnaireSlice = createSlice({
 			}
 		},
 		prevQuestion: (state) => {
+			const currentQuestion = questions[state.currentIndex];
+			if (currentQuestion.skippable) {
+				state.answers = {
+					...state.answers,
+					[currentQuestion.id]: "",
+				};
+			}
 			if (state.currentIndex - state.stepsSkipped > 0) {
 				state.currentIndex -= 1 + state.stepsSkipped;
 				state.stepsSkipped = 0;
@@ -65,7 +76,7 @@ export const questionnaireSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(createUserSuccess, () => initialState);
+		builder.addMatcher(isCreateUserSuccess, () => initialState);
 	},
 });
 

@@ -6,6 +6,7 @@ export interface QuestionInput {
 	placeholder: string;
 	type: "INPUT";
 	validationRegex: string;
+	skippable?: boolean;
 }
 
 export interface QuestionRadioButtons {
@@ -13,6 +14,7 @@ export interface QuestionRadioButtons {
 	questionText: string;
 	type: "RADIO";
 	options: Option[];
+	skippable?: boolean;
 }
 
 export interface Option {
