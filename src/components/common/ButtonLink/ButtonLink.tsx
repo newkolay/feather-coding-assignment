@@ -3,7 +3,7 @@ import { StyledLink } from "./styles";
 
 interface ButtonLinkProps {
 	children: React.ReactNode;
-	onClick(): void;
+	onClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 }
 
 export default function ButtonLink({ children, onClick }: ButtonLinkProps) {
