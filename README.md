@@ -1,7 +1,7 @@
 # Feather coding assignment
 
 The project can be found here:
-http://newkolay.github.io/feather-coding-assignment
+https://newkolay.github.io/feather-coding-assignment/
 
 ## Notes
 
